@@ -173,7 +173,7 @@ sleep 1
 for fun in "${arr_ok[@]}"
 do
     #prepare $FILE content
-	echo "Running scenario: $fun"
+    echo "Running scenario: $fun"
     $fun
     #run rest
     foobar_foo_gte_10 &> /dev/null
@@ -203,7 +203,7 @@ sleep 1
 for fun in "${arr_nok[@]}"
 do
     #prepare $FILE content
-	echo "Running scenario: $fun"
+    echo "Running scenario: $fun"
     $fun
     #run rest
     foobar_foo_gte_10 &> /dev/null
