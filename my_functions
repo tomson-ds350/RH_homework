@@ -1,0 +1,45 @@
+function foobar_foo_gte_10() {
+file="/tmp/foobar"
+opt="Foo"
+expected_value="10"
+assert_msg="Option '$opt' is greater than or equal to
+'$expected_value' in '$file'"
+
+rc=1
+
+#control of access
+if [ -r $file ]; then
+
+    #get variable value from file
+	value=`awk -F "=" -v myvar=$opt '$1~"^[[:blank:]]*"myvar"[[:blank:]]*$" {gsub(/[[:blank:]]/,""); val=$2}END{print val}' $file`
+
+    #convert to integer & evaluation
+    re='^[0-9]+$'
+    if [[ $value =~ $re ]] ; then
+        value=$((value))
+        expected_value=$((expected_value))
+
+        #evaluation
+        if [ $value -ge $expected_value ]; then
+            rc=0
+        fi
+    fi
+
+# access fail
+else
+    true
+fi
+
+
+#final message
+
+if [ $rc -eq 0 ]; then
+    echo "PASS - $assert_msg"
+    return 0
+else
+    echo "FAIL - $assert_msg"
+    return 1
+fi
+}
+
+
